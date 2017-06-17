@@ -6,6 +6,8 @@ public class Tiro : MonoBehaviour {
 
 	public Rigidbody2D rb;
 	public float velocidade;
+	[SerializeField]
+	private int dano;
 
 	// Use this for initialization
 	void Start () {
@@ -13,9 +15,8 @@ public class Tiro : MonoBehaviour {
 		Destroy(this.gameObject, 2f);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	public int GetDano() {
+		return this.dano;
 	}
 
 	public void SetarPosicao(Vector2 posicao) {

@@ -4,9 +4,33 @@ using UnityEngine;
 
 public class Nave : MonoBehaviour {
 
-	public Rigidbody2D rb;
+	//Intervalo padrão entre os disparos do jogador
+	private const float INTERVALO_TIRO_PADRAO = 0.4f;
+
+	[SerializeField]
+	private Rigidbody2D rb;
 	public float velocity = 5.0f;
 	public Tiro tiroPrefab;
+	//incrementa comTime.deltaTime
+	public float tempoDecorridoTiro;
+	//intervalo atual entre disparos
+	public float intervaloTiro;
+	//singleton
+	private static Nave instancia;
+	//Qtd de vidas do jogador
+	private int vidas = 3;
+
+
+	public static Nave GetInstancia() {
+		return Nave.instancia;
+	}
+
+	public void Awake() {
+		this.tempoDecorridoTiro = 0;
+		this.intervaloTiro = INTERVALO_TIRO_PADRAO;
+		Nave.instancia = this;
+	}
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -19,15 +43,23 @@ public class Nave : MonoBehaviour {
 	}
 
 	void shoot() {
-		bool atirar = Input.GetKeyDown(KeyCode.Space);
+		this.tempoDecorridoTiro += Time.deltaTime;
+
+		bool atirar = Input.GetKey(KeyCode.Space);
+
 		if (atirar) {
-			//Cria um novo tiro baseado no objeto de referência
-			Tiro tiro = Tiro.Instantiate(this.tiroPrefab);
-			//Obtém a posição atual da nave
-			Vector2 posicao = (Vector2)this.transform.position;
-			//Define a posição atual do tiro
-			tiro.SetarPosicao (posicao);
-			tiro.SetarDirecao(false);
+			//Se o tempo decorrido for maior que o intervalo entre os tiros
+			if (this.tempoDecorridoTiro >= this.intervaloTiro) {
+				this.tempoDecorridoTiro = 0;
+
+				//Cria um novo tiro baseado no objeto de referência
+				Tiro tiro = Tiro.Instantiate(this.tiroPrefab);
+				//Obtém a posição atual da nave
+				Vector2 posicao = (Vector2)this.transform.position;
+				//Define a posição atual do tiro
+				tiro.SetarPosicao (posicao);
+				tiro.SetarDirecao(false);
+			}
 		}
 	}
 
@@ -46,8 +78,20 @@ public class Nave : MonoBehaviour {
 
 	public void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.gameObject.CompareTag("TiroInimigo")) {
-			Destroy(this.gameObject);
+			this.vidas--;
+			if (this.vidas <= 0) {
+				Destroy(this.gameObject);
+				ControladorJogo.GetInstancia().ExibirFimDeJogo();
+			}
 			Destroy(collider.gameObject);
 		}
 	}
+	public void SetaIntervaloTiro(float intervalo) {
+		this.intervaloTiro = intervalo;		
+	}
+
+	public void SetarPrefabTiro(Tiro tiroPrefab) {
+		this.tiroPrefab = tiroPrefab;
+	}
+
 }
