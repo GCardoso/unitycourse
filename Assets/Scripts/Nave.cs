@@ -19,8 +19,10 @@ public class Nave : MonoBehaviour {
 	private static Nave instancia;
 	//Qtd de vidas do jogador
 	private int vidas = 3;
-
-
+	private int quantidadeTiros = 1;
+	[SerializeField]
+	private SpriteRenderer spriteRenderer;
+	
 	public static Nave GetInstancia() {
 		return Nave.instancia;
 	}
@@ -37,7 +39,6 @@ public class Nave : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Identifica se está cm a tecla W pressionada
 		move();
 		shoot();
 	}
@@ -48,19 +49,39 @@ public class Nave : MonoBehaviour {
 		bool atirar = Input.GetKey(KeyCode.Space);
 
 		if (atirar) {
+			Debug.Log("atirou");
 			//Se o tempo decorrido for maior que o intervalo entre os tiros
 			if (this.tempoDecorridoTiro >= this.intervaloTiro) {
 				this.tempoDecorridoTiro = 0;
-
-				//Cria um novo tiro baseado no objeto de referência
-				Tiro tiro = Tiro.Instantiate(this.tiroPrefab);
-				//Obtém a posição atual da nave
-				Vector2 posicao = (Vector2)this.transform.position;
-				//Define a posição atual do tiro
-				tiro.SetarPosicao (posicao);
-				tiro.SetarDirecao(false);
+				Debug.Log("entrou no intervalotiro");
+				if (this.quantidadeTiros % 2 != 0) {
+					Debug.Log("entrou no quantidadeTiro");
+					bool paraDireita = true;
+					this.CriarTiro(0f, 0f);
+					for (int i = 2; i <= this.quantidadeTiros; i++) {
+						int vetorDirecao = paraDireita ? 1 : -1;
+						this.CriarTiro(vetorDirecao * 0.4f, -0.4f);
+						paraDireita = !paraDireita;
+					}
+				} else {
+					Debug.Log("nao deveria entrar aqui");
+				}
 			}
 		}
+	}
+
+	private void CriarTiro(float offsetX, float offsetY) {
+		//Cria um novo tiro baseado no objeto de referência
+		Tiro tiro = Tiro.Instantiate(this.tiroPrefab);
+		
+		//Obtém a posição atual da nave
+		Vector2 posicao = (Vector2)this.transform.position;
+		posicao.x = posicao.x + offsetX;
+		posicao.y = posicao.y + offsetY;
+
+		//Define a posição atual do tiro
+		tiro.SetarPosicao (posicao);
+		tiro.SetarDirecao(false);
 	}
 
 	void move() {
@@ -72,17 +93,38 @@ public class Nave : MonoBehaviour {
 
 		x = moverDireita ? 1 : moverEsquerda ? -1 : 0;
 		y = moverCima ? 1 : moverBaixo ? -1 : 0;
+		
+		Vector2 posicao = new Vector2(x * this.velocity, y * this.velocity);
+		this.rb.velocity = posicao;
 
-		this.rb.velocity = new Vector2(x * this.velocity, y * this.velocity);
+		//Testa se o jador saiu da tela
+		ControladorCamera controladorCamera = ControladorCamera.GetInstancia();
+		posicao = this.transform.position;
+		posicao.y -= (GetAltura() / 2);
+		//Verifica se saiu pela parte de baixo
+		if (controladorCamera.EstaForaTelaBaixo(posicao)) {
+			Debug.Log("entrou");
+			Vector2 posicaoMundo = controladorCamera.GetPosicaoMundo(Vector2.zero);
+			posicao = this.transform.position;
+			posicao.y = (posicaoMundo.y + (GetAltura() / 2));
+			this.transform.position = posicao;
+		}
+
+	}
+
+	public float GetAltura() {
+		return spriteRenderer.bounds.size.y;
 	}
 
 	public void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.gameObject.CompareTag("TiroInimigo")) {
-			this.vidas--;
-			if (this.vidas <= 0) {
-				Destroy(this.gameObject);
-				ControladorJogo.GetInstancia().ExibirFimDeJogo();
-			}
+			//this.vidas--;
+		} 
+		if (this.vidas <= 0 || collider.gameObject.CompareTag("Inimigo")) {
+			Destroy(this.gameObject);
+			ControladorJogo.GetInstancia().ExibirFimDeJogo();
+		}
+		if (!collider.gameObject.CompareTag("TiroJogador")) {
 			Destroy(collider.gameObject);
 		}
 	}
@@ -92,6 +134,10 @@ public class Nave : MonoBehaviour {
 
 	public void SetarPrefabTiro(Tiro tiroPrefab) {
 		this.tiroPrefab = tiroPrefab;
+	}
+
+	public void SetarQuantidadeTiros(int quantidadeTiros) {
+		this.quantidadeTiros = quantidadeTiros;
 	}
 
 }

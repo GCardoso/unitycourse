@@ -12,7 +12,7 @@ public class Inimigo : MonoBehaviour {
 	private float tempoDecorridoTiro = 0;
 	private float velocityShip = 3;
 	
-	private int vidas = 3;
+	private int vidas = 5;
 	// Use this for initialization
 	void Start () {
 		
@@ -46,19 +46,13 @@ public class Inimigo : MonoBehaviour {
 			movendoEsquerda = true;
 		}
 
-
-//		if (tempoDecorrido >= 3f) {
-//			tempoDecorrido = 0;
-//			movendoEsquerda = !movendoEsquerda;
-//		}
-
 		if (tempoDecorridoTiro >= 0.8f && this.vidas > 0) {
 			shoot();
 			tempoDecorridoTiro = 0;
 		}
 
-		float direction = movendoEsquerda ? -1 : 1; 
-		this.rb.velocity = new Vector2(direction * this.velocityShip, this.rb.velocity.y);
+		float direction = movendoEsquerda ? -1 : 1;
+		this.rb.velocity = new Vector2(direction * this.velocityShip, -this.velocityShip);
 	}
 
 	public void OnTriggerEnter2D(Collider2D collider) {
@@ -69,6 +63,7 @@ public class Inimigo : MonoBehaviour {
 
 			if (this.vidas <= 0) {
 				Destroy(this.gameObject);
+				ControladorPontuacao.IncrementarPontuacao(1);
 			}
 		}
 	}

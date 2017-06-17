@@ -48,7 +48,7 @@ public class ControladorCamera : MonoBehaviour {
 
 	public bool EstaForaTelaBaixo(Vector2 posicao) {
 		Vector3 posicaoViewPort = GetPosicaoViewport(posicao);
-		return posicaoViewPort.y < 1;
+		return posicaoViewPort.y < 0;
 	}
 
 	// Update is called once per frame
@@ -63,6 +63,10 @@ public class ControladorCamera : MonoBehaviour {
 
 	public static ControladorCamera GetInstancia() {
 		return ControladorCamera.instancia;
+	}
+
+	public Vector2 GetPosicaoMundo(Vector2 posicaoViewPort) {
+		return this.cameraJogo.ViewportToWorldPoint(posicaoViewPort);
 	}
 
 	public bool EstaDentroTelaVertical(Vector2 posicao) {

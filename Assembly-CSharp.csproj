@@ -51,12 +51,16 @@
      <Compile Include="Assets\Scripts\ControladorCamera.cs" />
      <Compile Include="Assets\Scripts\ControladorInimigo.cs" />
      <Compile Include="Assets\Scripts\ControladorJogo.cs" />
+     <Compile Include="Assets\Scripts\ControladorPontuacao.cs" />
      <Compile Include="Assets\Scripts\Controladoritem.cs" />
+     <Compile Include="Assets\Scripts\DestruidorObjetos.cs" />
      <Compile Include="Assets\Scripts\Inimigo.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
      <Compile Include="Assets\Scripts\Nave.cs" />
-     <Compile Include="Assets\Scripts\Tiro.cs" />
-     <Compile Include="Assets\Scripts\TiroRapido.cs" />
+     <Compile Include="Assets\Scripts\TelaFimJogo.cs" />
+     <Compile Include="Assets\Scripts\TelaJogo.cs" />
+     <Compile Include="Assets\Scripts\Tiro\Tiro.cs" />
+     <Compile Include="Assets\Scripts\Tiro\TiroItem.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
