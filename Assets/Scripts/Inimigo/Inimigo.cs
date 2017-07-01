@@ -12,7 +12,7 @@ public class Inimigo : MonoBehaviour {
 	private float tempoDecorridoTiro = 0;
 	private float velocityShip = 3;
 	
-	private int vidas = 5;
+	private int vidas = 2;
 	// Use this for initialization
 	void Start () {
 		

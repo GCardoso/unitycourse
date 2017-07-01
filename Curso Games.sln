@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curso Games", "Assembly-CSharp-firstpass.csproj", "{FFD94D69-FE4C-FEF3-636A-BDB47ECCF9F2}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curso Games", "Assembly-CSharp.csproj", "{E6B3DE7A-D656-D0F5-52FB-52EAD2A896B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curso Games", "Assembly-CSharp-Editor.csproj", "{AE4E9712-B117-920D-EECA-EB8F0C97215F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFD94D69-FE4C-FEF3-636A-BDB47ECCF9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD94D69-FE4C-FEF3-636A-BDB47ECCF9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD94D69-FE4C-FEF3-636A-BDB47ECCF9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD94D69-FE4C-FEF3-636A-BDB47ECCF9F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E6B3DE7A-D656-D0F5-52FB-52EAD2A896B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E6B3DE7A-D656-D0F5-52FB-52EAD2A896B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6B3DE7A-D656-D0F5-52FB-52EAD2A896B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6B3DE7A-D656-D0F5-52FB-52EAD2A896B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4E9712-B117-920D-EECA-EB8F0C97215F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4E9712-B117-920D-EECA-EB8F0C97215F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4E9712-B117-920D-EECA-EB8F0C97215F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4E9712-B117-920D-EECA-EB8F0C97215F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
