@@ -22,6 +22,17 @@ public class TelaFimJogo : MonoBehaviour {
 	}
 
     private void ExecutarAnimacao() {
-        //throw new NotImplementedException();
+        LTDescr tween = LeanTween.scale(this.painel, Vector3.one, 0.35f);
+		tween.setFrom(Vector3.one * 2);
+		tween.setEase(LeanTweenType.easeOutBack);
+
+		int pontuacao = ControladorPontuacao.GetPontuacao();
+		tween = LeanTween.value(0, pontuacao, 3);
+		tween.setEase(LeanTweenType.easeOutCubic);
+		tween.setOnUpdate(EscreveValor);
     }
+
+	private void EscreveValor(float valor) {
+		pontuacaoTexto.text = ((int) valor).ToString();
+	}
 }
